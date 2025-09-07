@@ -86,7 +86,7 @@ File: /etc/kamailio/dispatcher.list
 
 Ensure exec("/usr/local/bin/restart_asterisk.sh $var(dest)"); is used for dst-down events.
 
-5.** Create Self-Healing Script**
+**5.** Create Self-Healing Script****
 
 /usr/local/bin/restart_asterisk.sh
 
@@ -111,14 +111,14 @@ else
     echo "$(timestamp) Restart FAILED for $IP" >> $LOGFILE
 fi
 
-6. Make Script Executable
+**6. Make Script Executable**
 sudo chmod +x /usr/local/bin/restart_asterisk.sh
 
-7. Start Kamailio & Asterisk
+**7. Start Kamailio & Asterisk**
 sudo systemctl restart kamailio
 sudo systemctl restart asterisk
 
-How It Works
+**How It Works**:-
 
 SIP clients send REGISTER and INVITE requests to Kamailio.
 
@@ -132,7 +132,7 @@ Traffic is automatically rerouted to remaining healthy Asterisk servers.
 
 Once the failed backend comes back up, it is added back to the dispatcher pool.
 
-Benefits
+**Benefits**
 
 High Availability VoIP setup
 
