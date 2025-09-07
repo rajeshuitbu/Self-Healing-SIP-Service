@@ -1,0 +1,10 @@
+#!/bin/bash
+DEST="$1"
+
+# Extract IP if full SIP URI is passed
+IP=$(echo $DEST | sed -E 's|sip:([^:]+):[0-9]+.*|\1|')
+
+echo "$(date) Restart triggered for $IP ($DEST)" >> /var/log/asterisk_restart.log
+
+ssh -o StrictHostKeyChecking=no root@$IP "systemctl restart asterisk"
+
