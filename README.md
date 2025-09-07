@@ -1,7 +1,7 @@
 # Self-Healing-SIP-Service
 
-Self-Healing SIP Service with Kamailio and Asterisk
-Project Overview
+**Self-Healing SIP Service with Kamailio and Asterisk**
+**Project Overview**
 
 This project implements a self-healing SIP infrastructure using Kamailio as the SIP load balancer and dispatcher and Asterisk as the SIP backend PBX. The system ensures high availability, automatic failover, and self-recovery of SIP services in case of backend failures.
 
@@ -9,7 +9,7 @@ The key innovation is that when a backend Asterisk server goes down, Kamailio de
 
 This setup is ideal for highly available VoIP deployments, call centers, UCaaS platforms, and telecom observability labs.
 
-Architecture Diagram
+**Architecture Diagram**
                +-------------------+
                |    SIP Clients    |
                |  (softphones,     |
@@ -34,7 +34,11 @@ Architecture Diagram
             | Self-Healing Script (restart_asterisk.sh)
             +------------------------------------------------+
 
-Components Used
+
+    
+<img width="1024" height="1024" alt="Astersik_DIAGRAM" src="https://github.com/user-attachments/assets/94cbfeb9-bbc3-4ec3-a362-4aa1ba66b3a2" />
+
+**Components Used**
 Component	Role
 Kamailio	SIP load balancer, dispatcher, and self-healing event handler.
 Asterisk	SIP PBX backend handling INVITE, REGISTER, and call logic.
@@ -44,13 +48,13 @@ SSH	Remote access to restart Asterisk servers automatically.
 restart_asterisk.sh	Custom script triggered by Kamailio to restart failed Asterisk instances.
 Features
 
-Load Balancing: Kamailio distributes SIP INVITE requests among multiple Asterisk backends using round-robin dispatching.
+**Load Balancing**: Kamailio distributes SIP INVITE requests among multiple Asterisk backends using round-robin dispatching.
 
-Health Monitoring: Kamailio uses SIP OPTIONS to probe backend health every 10 seconds.
+**Health Monitoring**: Kamailio uses SIP OPTIONS to probe backend health every 10 seconds.
 
-Self-Healing: When a backend goes DOWN:
+**Self-Healing**: When a backend goes DOWN:
 
-Kamailio triggers event_route[dispatcher:dst-down].
+**Kamailio trigger**s event_route[dispatcher:dst-down].
 
 Executes restart_asterisk.sh to recover the failed backend.
 
@@ -60,15 +64,15 @@ Centralized Logging: Logs all restarts in /tmp/asterisk_restart.log with timesta
 
 Remote Recovery: Can restart remote Asterisk servers over SSH if needed.
 
-Installation & Setup
-1. Install Kamailio
+**Installation & Setup**
+**1. Install Kamailio**
 sudo apt update
 sudo apt install kamailio kamailio-extra-modules
 
-2. Install Asterisk
+**2. Install Asterisk**
 sudo apt install asterisk
 
-3. Configure Dispatcher in Kamailio
+**3. Configure Dispatcher in Kamailio**
 
 File: /etc/kamailio/dispatcher.list
 
@@ -76,13 +80,13 @@ File: /etc/kamailio/dispatcher.list
 1 sip:13.220.90.70:5060
 1 sip:54.80.246.87:5060
 
-4. Configure Kamailio Routes
+**4. Configure Kamailio Routes**
 
 /etc/kamailio/kamailio.cfg contains routing logic, dispatcher configuration, and self-healing event_routes.
 
 Ensure exec("/usr/local/bin/restart_asterisk.sh $var(dest)"); is used for dst-down events.
 
-5. Create Self-Healing Script
+5.** Create Self-Healing Script**
 
 /usr/local/bin/restart_asterisk.sh
 
@@ -138,7 +142,7 @@ Centralized logging and monitoring
 
 Minimal downtime for SIP services
 
-Testing
+**Testing**
 
 Use SIPp to simulate SIP clients and call flows:
 
